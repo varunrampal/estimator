@@ -1,3 +1,78 @@
+Plant estimating, sourcing and procurement support for landscape and restoration projects across British Columbia. This is a Next.js App Router website with statically rendered service pages, a structured local blog, technical SEO routes and an estimate-request interface.
+
+## Requirements
+
+- Node.js 20.9 or newer
+- npm
+
+## Local setup
+
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL`.
+3. Start the development server with `npm run dev`.
+4. Open `http://localhost:3000`.
+
+## Commands
+
+- Development: `npm run dev`
+- Lint: `npm run lint`
+- TypeScript: `npm run typecheck`
+- Production build: `npm run build`
+- Serve a production build: `npm run start`
+
+## Environment variables
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin used by metadata, robots and sitemap. Replace the PlantBid example domain before deployment. |
+| `RESEND_API_KEY` | Server-only Resend API key. Never prefix it with `NEXT_PUBLIC_`. |
+| `RESEND_FROM_EMAIL` | Sender address on a domain verified in Resend, for example `PlantBid <requests@your-domain.ca>`. |
+| `CONTACT_EMAIL` | Recipient inbox for estimate requests and contact messages. Replace the placeholder address. |
+| `BLOB_READ_WRITE_TOKEN` | Reserved for future private document storage; current estimate attachments are emailed through Resend instead. |
+
+Never commit `.env.local` or production credentials. Estimate and contact requests are sent through Resend when all three mail settings are present. Without them, the endpoints return HTTP 503 and send nothing. Estimate documents are attached to the notification email; Resend and the recipient mailbox process and retain them according to their own settings. Test the full delivery path before launch and update the privacy notice with the business's actual practices.
+
+## Vercel deployment
+
+1. Push the project to a Git provider and import it in Vercel. The Next.js framework and `npm run build` command should be detected automatically.
+2. Set `NEXT_PUBLIC_SITE_URL` to the final canonical HTTPS origin in the Vercel project's environment variables.
+3. Set the Resend API key, verified sender and project inbox in Vercel environment variables. Never expose secrets through `NEXT_PUBLIC_` variables.
+4. Deploy a preview, test every route and form, then promote the production deployment.
+
+## Custom domain
+
+Add the chosen domain in Vercel project settings, follow its DNS instructions at the registrar, and enable HTTPS. Set `NEXT_PUBLIC_SITE_URL` to the preferred canonical version (for example, `https://www.example.ca` or `https://example.ca`) and redeploy. Avoid publishing both variants as separate canonical hosts.
+
+## Search Console
+
+1. Verify the production domain in Google Search Console using DNS or the verification method selected for the property.
+2. Submit `https://YOUR_DOMAIN/sitemap.xml` after deployment.
+3. Inspect the homepage and priority service pages, then monitor indexing and Core Web Vitals.
+4. Keep `NEXT_PUBLIC_SITE_URL` aligned with the verified canonical domain.
+
+## Google Analytics
+
+No analytics ID is hard-coded and no analytics script is loaded. Create a property when the business is ready, then add its measurement ID through the deployment environment and a consent/privacy-reviewed integration. The commented `NEXT_PUBLIC_GA_MEASUREMENT_ID` entry in `.env.example` is a reminder, not an active integration. Do not put Search Console verification values or analytics secrets in source code.
+
+## Where to update business details
+
+- Brand, service-area and contact copy: `components/site-header.tsx`, `components/site-footer.tsx`, `app/contact/page.tsx`, `app/request-estimate/page.tsx` and `lib/site.ts`.
+- Organization structured data: `app/page.tsx` and service data in `app/[slug]/page.tsx`.
+- Domain and canonical origin: `NEXT_PUBLIC_SITE_URL` in the deployment environment.
+- Replace `hello@plantbid.ca` and review the `privacy-policy` and `terms` records in `lib/site.ts` before launch. These starter notices are not legal advice.
+- Replace development Unsplash selections in `app/page.tsx` and `content/articles.ts` with owned or licensed images and accurate alt text.
+
+## SEO metadata
+
+Root defaults are in `app/layout.tsx`. Service and audience page titles/descriptions are in `lib/site.ts`; contact, request and blog-index metadata is in each route; article metadata is derived from `content/articles.ts`. `app/robots.ts` and `app/sitemap.ts` generate the crawl files.
+
+## Adding a blog post
+
+Add an `Article` object to `content/articles.ts` with a unique slug, description, ISO date, author, category, reading time, featured image and useful alt text. Write a substantial introduction and several sections with complete paragraphs. The blog index, static article route, Article JSON-LD and sitemap are generated from this collection.
+
+## Form and upload hardening before launch
+
+The estimate endpoint validates required fields, project type, selected services, file extensions, declared MIME types, basic document signatures, file count and size. Before launch, enforce request limits at the hosting layer, add malware scanning and abuse protection/rate limiting, define email and attachment retention/deletion practices, and update the privacy notice. If adding storage later, use private/quarantined object storage with short-lived access. Confirm the workflow treats project documents confidentially and uses them only to evaluate requested services.
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
