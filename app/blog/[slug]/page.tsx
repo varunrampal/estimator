@@ -40,7 +40,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
     datePublished: article.date,
     dateModified: article.date,
     author: { "@type": "Organization", name: article.author },
-    publisher: { "@type": "Organization", name: "PlantBid", url: siteUrl },
+    publisher: { "@type": "Organization", name: "Plant Estimators", url: siteUrl },
     image: article.featuredImage,
     mainEntityOfPage: `${siteUrl}/blog/${article.slug}`,
   };

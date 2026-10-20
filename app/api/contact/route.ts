@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sendPlantBidEmail } from "@/lib/resend";
+import { sendPlantEstimatorsEmail } from "@/lib/email";
 
 function textValue(form: FormData, key: string) {
   const value = form.get(key);
@@ -30,14 +30,14 @@ export async function POST(request: Request) {
   if (name.length > 120 || company.length > 160 || email.length > 254 || message.length > 5000) return invalid("One or more fields exceed the allowed length.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return invalid("Enter a valid email address.");
 
-  const result = await sendPlantBidEmail({
-    subject: `[PlantBid] Website message from ${name}`,
-    text: ["New PlantBid website message", "", `Name: ${name}`, `Company: ${company || "Not provided"}`, `Email: ${email}`, "", message].join("\n"),
+  const result = await sendPlantEstimatorsEmail({
+    subject: `[Plant Estimators] Website message from ${name}`,
+    text: ["New Plant Estimators website message", "", `Name: ${name}`, `Company: ${company || "Not provided"}`, `Email: ${email}`, "", message].join("\n"),
     replyTo: email,
   });
 
-  if (result.status === "unconfigured") return invalid("The contact email service is not configured. Nothing was sent. Please email hello@plantbid.ca to continue.", 503);
-  if (result.status === "failed") return invalid("We could not confirm that your message was sent. Please email hello@plantbid.ca before retrying.", 502);
+  if (result.status === "unconfigured") return invalid("The contact email service is not configured. Nothing was sent. Please email info@plantestimators.ca to continue.", 503);
+  if (result.status === "failed") return invalid("We could not confirm that your message was sent. Please email info@plantestimators.ca before retrying.", 502);
 
-  return NextResponse.json({ message: "Your message has been emailed to PlantBid. We will follow up using the contact details you provided." });
+  return NextResponse.json({ message: "Your message has been emailed to Plant Estimators. We will follow up using the contact details you provided." });
 }

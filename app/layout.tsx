@@ -15,16 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://plantbid.ca"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://plantestimators.ca"),
   title: {
-    default: "PlantBid | Plant Estimating, Sourcing & Procurement",
-    template: "%s | PlantBid",
+    default: "Plant Estimators | Plant Estimating, Sourcing & Procurement",
+    template: "%s | Plant Estimators",
   },
   description:
     "Plant estimating, sourcing and procurement support for landscape and restoration projects across British Columbia.",
   openGraph: {
     type: "website",
-    siteName: "PlantBid",
+    siteName: "Plant Estimators",
     locale: "en_CA",
   },
   twitter: { card: "summary_large_image" },

@@ -38,7 +38,7 @@ export default async function ContentPage({ params }: PageProps) {
     name: page.title,
     description: page.description,
     url: `${siteUrl}/${slug}`,
-    provider: { "@type": "Organization", name: "PlantBid", url: siteUrl, email: "hello@plantbid.ca" },
+    provider: { "@type": "Organization", name: "Plant Estimators", url: siteUrl, email: "info@plantestimators.ca" },
     areaServed: { "@type": "AdministrativeArea", name: "British Columbia, Canada" },
   } : null;
 

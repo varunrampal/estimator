@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Menu, Sprout, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -21,9 +22,8 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="nav-shell">
-        <Link className="brand" href="/" aria-label="PlantBid home" onClick={() => setOpen(false)}>
-          <span className="brand-mark"><Sprout aria-hidden="true" /></span>
-          <span>PlantBid</span>
+        <Link className="brand" href="/" aria-label="Plant Estimators home" onClick={() => setOpen(false)}>
+          <Image className="brand-logo" src="/images/plant-estimators-logo-transparent.png" alt="Plant Estimators" width={1760} height={500} priority unoptimized />
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}

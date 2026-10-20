@@ -24,19 +24,23 @@ Plant estimating, sourcing and procurement support for landscape and restoration
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin used by metadata, robots and sitemap. Replace the PlantBid example domain before deployment. |
-| `RESEND_API_KEY` | Server-only Resend API key. Never prefix it with `NEXT_PUBLIC_`. |
-| `RESEND_FROM_EMAIL` | Sender address on a domain verified in Resend, for example `PlantBid <requests@your-domain.ca>`. |
-| `CONTACT_EMAIL` | Recipient inbox for estimate requests and contact messages. Replace the placeholder address. |
-| `BLOB_READ_WRITE_TOKEN` | Reserved for future private document storage; current estimate attachments are emailed through Resend instead. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin used by metadata, robots and sitemap. Replace the Plant Estimators example domain before deployment. |
+| `IONOS_SMTP_HOST` | IONOS outgoing mail server, normally `smtp.ionos.com`. |
+| `IONOS_SMTP_PORT` | SMTP port, normally `465` for SSL/TLS. |
+| `IONOS_SMTP_SECURE` | Set to `true` when using port `465`; set to `false` for STARTTLS on port `587`. |
+| `IONOS_SMTP_USER` | Full IONOS mailbox address used to authenticate and send. |
+| `IONOS_SMTP_PASSWORD` | Server-only password for the IONOS mailbox. Never prefix it with `NEXT_PUBLIC_`. |
+| `IONOS_SMTP_FROM_NAME` | Sender display name shown in email clients, for example `Plant Estimators`. |
+| `CONTACT_EMAIL` | IONOS inbox that receives estimate requests and contact messages. |
+| `BLOB_READ_WRITE_TOKEN` | Reserved for future private document storage; current estimate attachments are emailed through IONOS SMTP. |
 
-Never commit `.env.local` or production credentials. Estimate and contact requests are sent through Resend when all three mail settings are present. Without them, the endpoints return HTTP 503 and send nothing. Estimate documents are attached to the notification email; Resend and the recipient mailbox process and retain them according to their own settings. Test the full delivery path before launch and update the privacy notice with the business's actual practices.
+Never commit `.env.local` or production credentials. Estimate and contact requests are sent through IONOS SMTP when all required mail settings are present. Without them, the endpoints return HTTP 503 and send nothing. Estimate documents are attached to the notification email; IONOS and the recipient mailbox process and retain them according to their own settings. Test the full delivery path before launch and update the privacy notice with the business's actual practices.
 
 ## Vercel deployment
 
 1. Push the project to a Git provider and import it in Vercel. The Next.js framework and `npm run build` command should be detected automatically.
 2. Set `NEXT_PUBLIC_SITE_URL` to the final canonical HTTPS origin in the Vercel project's environment variables.
-3. Set the Resend API key, verified sender and project inbox in Vercel environment variables. Never expose secrets through `NEXT_PUBLIC_` variables.
+3. Set the IONOS SMTP credentials and project inbox in Vercel environment variables. Never expose secrets through `NEXT_PUBLIC_` variables.
 4. Deploy a preview, test every route and form, then promote the production deployment.
 
 ## Custom domain
@@ -59,7 +63,7 @@ No analytics ID is hard-coded and no analytics script is loaded. Create a proper
 - Brand, service-area and contact copy: `components/site-header.tsx`, `components/site-footer.tsx`, `app/contact/page.tsx`, `app/request-estimate/page.tsx` and `lib/site.ts`.
 - Organization structured data: `app/page.tsx` and service data in `app/[slug]/page.tsx`.
 - Domain and canonical origin: `NEXT_PUBLIC_SITE_URL` in the deployment environment.
-- Replace `hello@plantbid.ca` and review the `privacy-policy` and `terms` records in `lib/site.ts` before launch. These starter notices are not legal advice.
+- Confirm `info@plantestimators.ca` and review the `privacy-policy` and `terms` records in `lib/site.ts` before launch. These starter notices are not legal advice.
 - Replace development Unsplash selections in `app/page.tsx` and `content/articles.ts` with owned or licensed images and accurate alt text.
 
 ## SEO metadata

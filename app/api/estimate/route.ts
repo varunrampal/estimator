@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sendPlantBidEmail } from "@/lib/resend";
+import { sendPlantEstimatorsEmail } from "@/lib/email";
 
 const acceptedTypes: Record<string, string[]> = {
   pdf: ["application/pdf", "application/octet-stream"],
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
 
   const notes = textValue(form, "projectNotes");
   const emailText = [
-    "New PlantBid estimate request",
+    "New Plant Estimators estimate request",
     "",
     "Contact",
     `Name: ${fullName}`,
@@ -110,15 +110,15 @@ export async function POST(request: Request) {
     ...(uploads.length ? uploads.map((file) => `- ${safeFilename(file.name)}`) : ["None"]),
   ].join("\n");
 
-  const result = await sendPlantBidEmail({
-    subject: `[PlantBid] Estimate request: ${projectName}`,
+  const result = await sendPlantEstimatorsEmail({
+    subject: `[Plant Estimators] Estimate request: ${projectName}`,
     text: emailText,
     replyTo: email,
     attachments,
   });
 
-  if (result.status === "unconfigured") return invalid("The estimate email service is not configured. Nothing was sent. Please email hello@plantbid.ca to continue.", 503);
-  if (result.status === "failed") return invalid("We could not confirm that your request email was sent. Please email hello@plantbid.ca before retrying.", 502);
+  if (result.status === "unconfigured") return invalid("The estimate email service is not configured. Nothing was sent. Please email info@plantestimators.ca to continue.", 503);
+  if (result.status === "failed") return invalid("We could not confirm that your request email was sent. Please email info@plantestimators.ca before retrying.", 502);
 
-  return NextResponse.json({ message: "Your estimate request has been emailed to PlantBid. We will follow up using the contact details you provided." });
+  return NextResponse.json({ message: "Your estimate request has been emailed to Plant Estimators. We will follow up using the contact details you provided." });
 }

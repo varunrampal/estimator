@@ -67,7 +67,7 @@ export function QuoteForm() {
         setFeedback({ kind: "error", message: result.message || "Please review the form and try again." });
       }
     } catch {
-      setFeedback({ kind: "error", message: "We could not reach the request service. No confirmation was received; please email hello@plantbid.ca." });
+      setFeedback({ kind: "error", message: "We could not reach the request service. No confirmation was received; please email info@plantestimators.ca." });
     } finally {
       setSubmitting(false);
     }
@@ -101,10 +101,10 @@ export function QuoteForm() {
       </div>
       {fileError && <p className="field-error" id="upload-error" role="alert">{fileError}</p>}
       {files.length > 0 && <ul className="selected-files" aria-label="Selected files">{files.map((file, index) => <li key={`${file.name}-${index}`}><FileText size={15} /><span>{file.name}<small>{(file.size / (1024 * 1024)).toFixed(2)} MB</small></span><button type="button" aria-label={`Remove ${file.name}`} onClick={() => removeFile(index)}><Trash2 size={15} /></button></li>)}</ul>}
-      <p className="confidentiality-note">Project details and documents are used to evaluate your request. When configured, this form emails them to PlantBid&apos;s project inbox through Resend. Do not send information you are not authorized to share.</p>
-      <label className="consent-option"><input type="checkbox" name="acknowledge" required /><span>I confirm I am authorized to share these details and documents and understand they will be emailed to PlantBid&apos;s configured project inbox to evaluate my request.</span></label>
+      <p className="confidentiality-note">Project details and documents are used to evaluate your request. When configured, this form emails them to the project inbox through IONOS. Do not send information you are not authorized to share.</p>
+      <label className="consent-option"><input type="checkbox" name="acknowledge" required /><span>I confirm I am authorized to share these details and documents and understand they will be emailed to the configured project inbox to evaluate my request.</span></label>
       <button className="button submit-button" type="submit" disabled={submitting}>{submitting ? "Sending request..." : "Submit estimate request"}<ArrowUpRight size={14} /></button>
-      <p className="form-footnote">Prefer email? <a href="mailto:hello@plantbid.ca">hello@plantbid.ca</a>. Please confirm a secure document-delivery method before sending sensitive files.</p>
+      <p className="form-footnote">Prefer email? <a href="mailto:info@plantestimators.ca">info@plantestimators.ca</a>. Please confirm a secure document-delivery method before sending sensitive files.</p>
     </form>
   );
 }
