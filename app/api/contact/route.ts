@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendPlantEstimatorsEmail } from "@/lib/email";
+import { buildContactEmail } from "@/lib/email-templates";
 
 function textValue(form: FormData, key: string) {
   const value = form.get(key);
@@ -30,9 +31,10 @@ export async function POST(request: Request) {
   if (name.length > 120 || company.length > 160 || email.length > 254 || message.length > 5000) return invalid("One or more fields exceed the allowed length.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return invalid("Enter a valid email address.");
 
+  const body = buildContactEmail({ name, company, email, message });
   const result = await sendPlantEstimatorsEmail({
     subject: `[Plant Estimators] Website message from ${name}`,
-    text: ["New Plant Estimators website message", "", `Name: ${name}`, `Company: ${company || "Not provided"}`, `Email: ${email}`, "", message].join("\n"),
+    ...body,
     replyTo: email,
   });
 

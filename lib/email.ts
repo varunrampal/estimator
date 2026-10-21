@@ -3,6 +3,7 @@ import nodemailer, { type SendMailOptions } from "nodemailer";
 type PlantEstimatorsEmail = {
   subject: string;
   text: string;
+  html?: string;
   replyTo: string;
   attachments?: NonNullable<SendMailOptions["attachments"]>;
 };
@@ -41,6 +42,7 @@ export async function sendPlantEstimatorsEmail(email: PlantEstimatorsEmail): Pro
       replyTo: email.replyTo,
       subject: email.subject,
       text: email.text,
+      html: email.html,
       attachments: email.attachments,
     });
 

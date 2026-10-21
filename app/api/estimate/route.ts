@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendPlantEstimatorsEmail } from "@/lib/email";
+import { buildEstimateEmail } from "@/lib/email-templates";
 
 const acceptedTypes: Record<string, string[]> = {
   pdf: ["application/pdf", "application/octet-stream"],
@@ -85,34 +86,23 @@ export async function POST(request: Request) {
   if (totalBytes > maxTotalBytes) return invalid("The combined document size exceeds 20 MB.");
 
   const notes = textValue(form, "projectNotes");
-  const emailText = [
-    "New Plant Estimators estimate request",
-    "",
-    "Contact",
-    `Name: ${fullName}`,
-    `Company: ${company}`,
-    `Email: ${email}`,
-    `Phone: ${phone || "Not provided"}`,
-    "",
-    "Project",
-    `Name: ${projectName}`,
-    `Location: ${projectLocation}`,
-    `Type: ${projectType}`,
-    `Tender closing: ${closingDate || "Not provided"}`,
-    "",
-    "Services requested",
-    ...services.map((service) => `- ${service}`),
-    "",
-    "Project notes",
-    notes || "None provided",
-    "",
-    "Attached documents",
-    ...(uploads.length ? uploads.map((file) => `- ${safeFilename(file.name)}`) : ["None"]),
-  ].join("\n");
+  const body = buildEstimateEmail({
+    fullName,
+    company,
+    email,
+    phone,
+    projectName,
+    projectLocation,
+    projectType,
+    closingDate,
+    services,
+    notes,
+    attachments: uploads.map((file) => safeFilename(file.name)),
+  });
 
   const result = await sendPlantEstimatorsEmail({
     subject: `[Plant Estimators] Estimate request: ${projectName}`,
-    text: emailText,
+    ...body,
     replyTo: email,
     attachments,
   });
