@@ -12,7 +12,7 @@ const links = [
   ["How it works", "/#process"],
   ["Expertise", "/#expertise"],
   ["About", "/about"],
-  ["Insights", "/blog"],
+//   ["Insights", "/blog"],
   ["Contact", "/contact"],
 ];
 
@@ -22,9 +22,11 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="nav-shell">
-        <Link className="brand" href="/" aria-label="Plant Estimators home" onClick={() => setOpen(false)}>
-          <Image className="brand-logo" src="/images/plant-estimators-logo-transparent.png" alt="Plant Estimators" width={1760} height={500} priority unoptimized />
-        </Link>
+        <div className="brand-lockup">
+          <Link className="brand" href="/" aria-label="Plant Estimators home" onClick={() => setOpen(false)}>
+            <Image className="brand-logo" src="/images/plant-estimators-logo-transparent.png" alt="Plant Estimators" width={1760} height={500} priority unoptimized />
+          </Link>
+        </div>
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}
         </nav>

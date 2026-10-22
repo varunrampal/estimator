@@ -29,7 +29,7 @@ export function SiteFooter() {
           <h2>Plant Estimators</h2>
           <Link href="/industries">Industries</Link>
           <Link href="/about">About</Link>
-          <Link href="/blog">Insights</Link>
+          {/* <Link href="/blog">Insights</Link> */}
           <Link href="/contact">Contact</Link>
         </div>
         <div className="footer-col">

@@ -33,7 +33,7 @@ export default function Home() {
             </Reveal>
           </div>
           <Reveal className="hero-visual" delay={0.12}>
-            <div className="hero-photo"><Image src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=85" alt="Layered temperate forest canopy in British Columbia" fill priority sizes="(max-width: 760px) 100vw, 54vw" /></div>
+            <div className="hero-photo"><Image src="/images/hero-nursery.jpg" alt="Nursery staff reviewing rows of young plants in a greenhouse" fill priority sizes="(max-width: 760px) 100vw, 54vw" /></div>
             <div className="schedule-card" aria-label="Illustrative plant schedule">
               <div className="schedule-top"><div><div className="schedule-label">Plant package review</div><div className="schedule-title">Schedule overview</div></div><span className="schedule-number">PE / 014</span></div>
               <table className="schedule-table"><thead><tr><th>Plant material</th><th>Size</th><th>Qty</th><th>Status</th></tr></thead><tbody>
